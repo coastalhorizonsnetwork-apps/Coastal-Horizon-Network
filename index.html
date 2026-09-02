@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coastal Horizon Network</title>
+  <meta name="description" content="Coastal Horizon Network — a modern hub for our community, departments, resources, and members." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Coastal Horizon Network home">
+        <img src="assets/watermark.png" alt="Coastal Horizon Network" class="brand-logo" />
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#departments">Departments</a>
+        <a href="#community">Community</a>
+        <a href="#resources">Resources</a>
+        <a href="#dashboard" id="dashboardLink" class="hidden">Dashboard</a>
+      </nav>
+      <button class="login-btn" id="loginButton">Login with Discord</button>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-glow glow-one"></div>
+        <div class="hero-glow glow-two"></div>
+        <div class="hero-content">
+          <p class="eyebrow">COASTAL HORIZON NETWORK</p>
+          <h1>Where Community Meets <span>Roleplay.</span></h1>
+          <p class="hero-copy">A polished home base for Coastal Horizon members, departments, leadership, and community resources — built around the people who make the network.</p>
+          <div class="hero-actions">
+            <button class="primary" id="heroLogin">Access Member Portal</button>
+            <a class="secondary" href="#departments">Explore Departments</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>01</strong><span>Connected Community</span></div>
+            <div><strong>06</strong><span>Core Departments</span></div>
+            <div><strong>24/7</strong><span>Network Access</span></div>
+          </div>
+        </div>
+        <div class="hero-mark">
+          <img src="assets/logo.png" alt="Coastal Horizon Network emblem" />
+        </div>
+      </section>
+
+      <section id="departments" class="section">
+        <div class="section-heading"><div><p class="eyebrow">OUR NETWORK</p><h2>Explore Departments</h2></div><p>Select a department to learn more and access its dedicated resources.</p></div>
+        <div class="card-grid">
+          <article class="feature-card"><span class="card-number">01</span><h3>Los Santos County Sheriffs</h3><p>Law enforcement operations, command resources, policies, and member tools.</p><a href="#dashboard">Open Department →</a></article>
+          <article class="feature-card"><span class="card-number">02</span><h3>Los Santos Police Department</h3><p>Department information, resources, leadership material, and community operations.</p><a href="#dashboard">Open Department →</a></article>
+          <article class="feature-card"><span class="card-number">03</span><h3>San Andreas Highway Patrol</h3><p>Highway enforcement resources, patrol information, and department access.</p><a href="#dashboard">Open Department →</a></article>
+          <article class="feature-card"><span class="card-number">04</span><h3>San Andreas Fire Rescue</h3><p>Emergency response, fire operations, rescue resources, and member tools.</p><a href="#dashboard">Open Department →</a></article>
+          <article class="feature-card"><span class="card-number">05</span><h3>San Andreas Communications</h3><p>Communications resources, dispatch operations, and network coordination.</p><a href="#dashboard">Open Department →</a></article>
+          <article class="feature-card"><span class="card-number">06</span><h3>Civilian Operations</h3><p>Civilian roleplay resources, community activities, and member support.</p><a href="#dashboard">Open Department →</a></article>
+        </div>
+      </section>
+
+      <section id="community" class="split-section">
+        <div class="split-copy"><p class="eyebrow">BUILT FOR MEMBERS</p><h2>One Network. One Identity. One Community.</h2><p>Coastal Horizon Network brings community access, department resources, and member tools into one streamlined experience. Sign in with Discord to unlock personalized features.</p><div class="check-row"><span>✓</span><p>Secure community authentication</p></div><div class="check-row"><span>✓</span><p>Personalized member dashboard</p></div><div class="check-row"><span>✓</span><p>Department-focused resources</p></div></div>
+        <div class="glass-panel"><div class="panel-top"><span class="status-dot"></span> Network Status</div><div class="status-value">ONLINE</div><p>All core community services are operational.</p><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i></div></div>
+      </section>
+
+      <section id="resources" class="section compact-section">
+        <div class="section-heading"><div><p class="eyebrow">MEMBER RESOURCES</p><h2>Everything in One Place</h2></div><p>Designed to scale as Coastal Horizon Network grows.</p></div>
+        <div class="resource-grid"><div class="resource"><strong>Policies</strong><span>Rules, guidelines, and standards</span></div><div class="resource"><strong>Applications</strong><span>Join, transfer, and leadership forms</span></div><div class="resource"><strong>Training</strong><span>Department resources and materials</span></div><div class="resource"><strong>Support</strong><span>Community help and contact options</span></div></div>
+      </section>
+
+      <section id="dashboard" class="dashboard-section hidden">
+        <div class="dashboard-shell"><div><p class="eyebrow">MEMBER DASHBOARD</p><h2>Welcome, <span id="memberName">Member</span>.</h2><p>Your Coastal Horizon account is connected through Discord.</p></div><button class="secondary" id="logoutButton">Log Out</button></div>
+        <div class="dashboard-grid"><div class="dash-card"><span>ACCOUNT</span><strong id="memberTag">Discord Member</strong><p>Authenticated session</p></div><div class="dash-card"><span>MEMBERSHIP</span><strong>Active</strong><p>Coastal Horizon Network</p></div><div class="dash-card"><span>ACCESS</span><strong>Member</strong><p>Dashboard access enabled</p></div></div>
+      </section>
+    </main>
+
+    <footer><div class="footer-brand"><img src="assets/logo.png" alt=""/><div><strong>COASTAL HORIZON</strong><span>NETWORK</span></div></div><p>© 2026 Coastal Horizon Network. All rights reserved.</p></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
