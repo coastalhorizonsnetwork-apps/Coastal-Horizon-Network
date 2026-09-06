@@ -1,81 +1,12 @@
-const $ = (s) => document.querySelector(s);
-const $$ = (s) => [...document.querySelectorAll(s)];
-
-const FORM_URLS = {
-  appeal: '#forms',
-  report: '#forms',
-  support: '#forms'
-};
-
-function openPanel(id){
-  const panel = document.getElementById(id);
-  if(!panel) return;
-  panel.classList.add('open');
-  document.body.classList.add('locked');
-}
-function closePanels(){
-  $$('.overlay.open').forEach(x=>x.classList.remove('open'));
-  document.body.classList.remove('locked');
-}
-
-$$('[data-menu]').forEach(btn => btn.addEventListener('click', () => {
-  const menu = btn.nextElementSibling;
-  menu?.classList.toggle('open');
-}));
-
-document.addEventListener('click', (e) => {
-  if(!e.target.closest('.dropdown')) $$('.dropdown-menu.open').forEach(x=>x.classList.remove('open'));
-  const trigger = e.target.closest('[data-open]');
-  if(trigger) openPanel(trigger.dataset.open);
-  if(e.target.closest('[data-close]')) closePanels();
-});
-
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closePanels(); });
-
-$('#protectedAccess')?.addEventListener('submit', e => {
-  e.preventDefault();
-  const code = $('#resourceCode').value.trim();
-  if(code === '2091'){
-    closePanels();
-    $('#protectedContent')?.classList.add('unlocked');
-    $('#resourceLock')?.classList.add('hidden');
-    $('#resourceCode').value = '';
-    $('#resourceMessage').textContent = 'Protected resources unlocked for this session.';
-  } else {
-    $('#resourceMessage').textContent = 'Incorrect access code.';
-  }
-});
-
-$('#adminAccess')?.addEventListener('submit', e => {
-  e.preventDefault();
-  const code = $('#adminCode').value.trim();
-  if(code === 'ADMIN-321098'){
-    closePanels();
-    $('#adminPanel')?.classList.add('visible');
-    $('#adminPanel')?.scrollIntoView({behavior:'smooth', block:'start'});
-    $('#adminCode').value = '';
-  } else $('#adminMessage').textContent = 'Incorrect administrator code.';
-});
-
-$('#eventForm')?.addEventListener('submit', e => {
-  e.preventDefault();
-  const title = $('#eventTitle').value.trim();
-  const date = $('#eventDate').value;
-  if(!title || !date) return;
-  const list = $('#eventList');
-  const item = document.createElement('article');
-  item.className = 'event-card';
-  item.innerHTML = `<div class="event-date"><strong>${new Date(date+'T12:00:00').toLocaleDateString(undefined,{month:'short'})}</strong><b>${new Date(date+'T12:00:00').getDate()}</b></div><div><span class="tag">COMMUNITY EVENT</span><h3>${title.replace(/[<>]/g,'')}</h3><p>${$('#eventDetails').value.replace(/[<>]/g,'')}</p></div>`;
-  list.prepend(item);
-  $('#eventForm').reset();
-});
-
-$('#announcementForm')?.addEventListener('submit', e => {
-  e.preventDefault();
-  const text = $('#announcementText').value.trim();
-  if(!text) return;
-  $('#announcement').querySelector('strong').textContent = text;
-  $('#announcementText').value = '';
-});
-
-$('#year').textContent = new Date().getFullYear();
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ROLEPLAY_CODE='2091', ADMIN_CODE='ADMIN-321098';
+$('#year').textContent=new Date().getFullYear();
+function openPanel(id){const p=document.getElementById(id);if(p){p.classList.add('open');document.body.classList.add('locked')}}
+function closePanels(){$$('.overlay.open').forEach(x=>x.classList.remove('open'));document.body.classList.remove('locked')}
+$$('[data-menu]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();const menu=btn.nextElementSibling;$$('.dropdown-menu.open').forEach(x=>{if(x!==menu)x.classList.remove('open')});menu?.classList.toggle('open')}));
+document.addEventListener('click',e=>{if(!e.target.closest('.dropdown'))$$('.dropdown-menu.open').forEach(x=>x.classList.remove('open'));const trigger=e.target.closest('[data-open]');if(trigger)openPanel(trigger.dataset.open);if(e.target.closest('[data-close]'))closePanels()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanels()});
+$$('[data-form]').forEach(b=>b.addEventListener('click',()=>openPanel('resourceModal')));
+$('#protectedAccess')?.addEventListener('submit',e=>{e.preventDefault();const code=$('#resourceCode').value.trim(),msg=$('#resourceMessage');if(code===ROLEPLAY_CODE){closePanels();$('#resourceCode').value='';msg.textContent='Access granted. RolePlay Resources are unlocked for this session.';msg.style.color='#62efad';const links=$$('.locked a');links.forEach(a=>a.style.color='#62efad')}else msg.textContent='Incorrect access code.'});
+$('#adminAccess')?.addEventListener('submit',e=>{e.preventDefault();const code=$('#adminCode').value.trim();if(code!==ADMIN_CODE){$('#adminMessage').textContent='Incorrect administrator code.';return}closePanels();$('#adminCode').value='';showAdminPanel()});
+function showAdminPanel(){let panel=$('#adminPanel');if(panel){panel.classList.add('visible');panel.scrollIntoView({behavior:'smooth'});return}panel=document.createElement('section');panel.id='adminPanel';panel.className='admin-panel visible';panel.innerHTML=`<div class="admin-inner"><div class="section-head"><div><p class="eyebrow">STAFF ONLY</p><h2>ADMIN <em>PANEL.</em></h2></div><button class="outline" id="closeAdmin">Close</button></div><div class="admin-grid"><form id="announcementForm"><h3>Announcement Banner</h3><textarea id="adminAnnouncement" placeholder="Write a new announcement..."></textarea><button class="join" type="submit">Publish Announcement</button></form><form id="eventForm"><h3>Add Event</h3><input id="eventTitle" placeholder="Event title" required><input id="eventDate" type="date" required><textarea id="eventDetails" placeholder="Event details"></textarea><button class="join" type="submit">Add Event</button></form></div><p class="admin-note">Admin controls in this static build are browser-local. Move these controls behind a server-side authenticated backend before production use.</p></div>`;document.body.appendChild(panel);$('#closeAdmin').addEventListener('click',()=>panel.classList.remove('visible'));$('#announcementForm').addEventListener('submit',e=>{e.preventDefault();const value=$('#adminAnnouncement').value.trim();if(!value)return;$('#announcementText').textContent=value;$('#adminAnnouncement').value='';alert('Announcement updated for this browser session.')});$('#eventForm').addEventListener('submit',e=>{e.preventDefault();const title=$('#eventTitle').value.trim(),date=$('#eventDate').value,details=$('#eventDetails').value.trim();if(!title||!date)return;const d=new Date(date+'T12:00:00'),card=document.createElement('article');card.className='event-card';card.innerHTML=`<div class="event-date"><strong>${d.toLocaleString('en-US',{month:'short'}).toUpperCase()}</strong><b>${d.getDate()}</b></div><div><span class="tag">CHN EVENT</span><h3>${title.replace(/[<>]/g,'')}</h3><p>${details.replace(/[<>]/g,'')}</p></div>`;$('#eventGrid').prepend(card);$('#eventForm').reset()});panel.scrollIntoView({behavior:'smooth'})}
